@@ -65,10 +65,9 @@ exports.protect = catchAsync(async (req, res, next) => {
 
     const decoded = await oAuth2Client.verifyIdToken({idToken});
     const payload = decoded.getPayload()
-    console.log(payload.sub);
 
     // check if user still exists
-    const currentUser = await User.findById(payload.sub);
+    const currentUser = await User.findOne({sub: payload.sub});
     if (!currentUser) {
         return next(new AppError('A tokenhez tartozó felhasználó már nem létezik!', 401));
     }

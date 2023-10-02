@@ -4,17 +4,20 @@ import { MaterialDesignModule } from './modules/material-design/material-design.
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HttpClientModule } from '@angular/common/http';
-import { NewsFeedComponent } from './components/news-feed/news-feed.component';
-import { TopNavbarComponent } from './components/top-navbar/top-navbar.component';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { NewsFeedComponent } from './components/main/news-feed/news-feed.component';
+import { TopNavbarComponent } from './components/main/top-navbar/top-navbar.component';
 import { AuthComponent } from './components/auth/auth.component';
+import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
+import { MainComponent } from './components/main/main.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NewsFeedComponent,
     TopNavbarComponent,
-    AuthComponent
+    AuthComponent,
+    MainComponent
   ],
   imports: [
     BrowserModule,
@@ -22,7 +25,9 @@ import { AuthComponent } from './components/auth/auth.component';
     HttpClientModule,
     MaterialDesignModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

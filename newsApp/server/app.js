@@ -5,6 +5,7 @@ const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 
 const authRouter = require('./routes/authRoutes');
+const userRouter = require('./routes/userRoutes');
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cors({
 const apiPrefix = "/api/v1";
 
 app.use(`/auth`, authRouter);
+app.use(`${apiPrefix}/users`, userRouter);
 
 app.all('*', (req,res, next) => {
     next(new AppError(`Nem található ${req.originalUrl} a szerveren!❌`,404));
