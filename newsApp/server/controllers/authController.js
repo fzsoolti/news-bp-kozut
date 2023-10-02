@@ -16,11 +16,11 @@ exports.googleAuth = catchAsync(async (req, res, next) => {
         access_type: 'offline',
         scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'],
     });
-
+    
     res.redirect(authUrl);
+    // res.json({authUrl});
 });
 
-//ÁT KELL ÍRNI MAJD APPERRORR-RA!
 exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
     const code = req.query.code;
     try {
@@ -43,9 +43,9 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
         await User.findOneAndUpdate({ sub: payload.sub }, { lastLogin: new Date() , pictureURL: payload.picture});
 
         const clientURL = process.env.NODE_ENV === 'development' ? process.env.CLIENT_URL_DEV : process.env.CLIENT_URL_PROD;
-        res.redirect(clientURL);
+
+        res.redirect(clientURL+"?token="+idToken);
     } catch (error) {
-        console.log(error);
         return next(new AppError('Hitelesítési hiba történt', 500));
     }
 });

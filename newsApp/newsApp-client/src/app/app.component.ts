@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -6,12 +7,25 @@ import { environment } from 'src/environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
-  constructor() {}
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
-  signInWithGoogle(){
-    window.location.href = environment.host+"/auth";
+  ngOnInit(): void {
+    this.route.queryParams.subscribe((params: Params) => {
+      if (params['token']) {
+        const token = params['token'];
+        console.log(token);
+        this.clearQueryParams();
+      }
+    });
+  }
+
+  clearQueryParams() {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: {},
+    });
   }
 
 }
