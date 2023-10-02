@@ -21,6 +21,10 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: [true, "Kép megadása kötelező!"],
       },
+      createdAt:{
+        type: Date,
+        required: true
+      },
       lastLogin: {
         type: Date
       }

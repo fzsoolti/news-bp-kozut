@@ -28,6 +28,7 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
         const idToken = tokens.id_token;
         const decoded = await oAuth2Client.verifyIdToken({idToken});
         const payload = decoded.getPayload()
+        const expiresIn = payload.exp;
 
         const user = await User.findOne({sub: payload.sub});
 
@@ -37,6 +38,7 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
                 username: payload.name,
                 email: payload.email,
                 pictureURL: payload.picture,
+                createdAt: new Date()
             });
         }
 
@@ -44,7 +46,7 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
 
         const clientURL = process.env.NODE_ENV === 'development' ? process.env.CLIENT_URL_DEV : process.env.CLIENT_URL_PROD;
 
-        res.redirect(clientURL+"?token="+idToken);
+        res.redirect(clientURL+"/auth"+"?token="+idToken+"&exp="+expiresIn);
     } catch (error) {
         return next(new AppError('Hitelesítési hiba történt', 500));
     }
