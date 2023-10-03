@@ -6,6 +6,7 @@ const globalErrorHandler = require('./controllers/errorController');
 
 const authRouter = require('./routes/authRoutes');
 const userRouter = require('./routes/userRoutes');
+const newsFeedRouter = require('./routes/newsFeedRoutes');
 
 const app = express();
 
@@ -18,6 +19,7 @@ const apiPrefix = "/api/v1";
 
 app.use(`/auth`, authRouter);
 app.use(`${apiPrefix}/users`, userRouter);
+app.use(`${apiPrefix}/news`, newsFeedRouter);
 
 app.all('*', (req,res, next) => {
     next(new AppError(`Nem található ${req.originalUrl} a szerveren!❌`,404));
