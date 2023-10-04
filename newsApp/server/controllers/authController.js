@@ -46,14 +46,23 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
 
         const clientURL = process.env.NODE_ENV === 'development' ? process.env.CLIENT_URL_DEV : process.env.CLIENT_URL_PROD;
 
+        // res.status(200).json({
+        //     status: "success",
+        //     data: {
+        //         idToken,
+        //         expiresIn
+        //     },
+        // });
+
         res.redirect(clientURL+"/auth"+"?token="+idToken+"&exp="+expiresIn);
     } catch (error) {
-        return next(new AppError('Hitelesítési hiba történt', 500));
+        //return next(new AppError('Hitelesítési hiba történt', 500));
+        window.alert("Hitelesítési hiba történt");
+        res.redirect(clientURL);
     }
 });
 
 exports.protect = catchAsync(async (req, res, next) => {
-    // get and check token
     let idToken;
     if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
         idToken = req.headers.authorization.split(' ')[1];
@@ -66,7 +75,6 @@ exports.protect = catchAsync(async (req, res, next) => {
     const decoded = await oAuth2Client.verifyIdToken({idToken});
     const payload = decoded.getPayload()
 
-    // check if user still exists
     const currentUser = await User.findOne({sub: payload.sub});
     if (!currentUser) {
         return next(new AppError('A tokenhez tartozó felhasználó már nem létezik!', 401));

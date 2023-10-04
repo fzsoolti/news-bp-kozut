@@ -19,16 +19,6 @@ const handleCastErrorDB = (err) => {
     return new AppError(message, 400);
   };
   
-  const handleJWTError = () => {
-    const message = `Érvénytelen token.😢 Kérlek, jelentkezz be újra!`;
-    return new AppError(message, 401);
-  };
-  
-  const handleJWTExpiredError = () => {
-    const message = `Token érvényességi ideje lejárt.😢 Kérlek, jelentkezz be újra!`;
-    return new AppError(message, 401);
-  };
-  
   //SEND ERROR
   const sendErrorDev = (err, res) => {
     res.status(err.statusCode).json({
@@ -65,8 +55,6 @@ module.exports = (err, req, res, next) => {
       if (err.name === "CastError") err = handleCastErrorDB(err);
       if (err.code === 11000) err = handleDuplicateFieldsDB(err);
       if (err.name === "ValidationError") err = handleValidationErrorDB(err);
-      if (err.name === "JsonWebTokenError") err = handleJWTError();
-      if (err.name === "TokenExpiredError") err = handleJWTExpiredError();
   
       sendErrorProd(err, res);
     }

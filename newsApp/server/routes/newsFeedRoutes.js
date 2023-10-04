@@ -1,5 +1,6 @@
 const express = require('express');
 const authController = require('../controllers/authController');
+const newsfeedController = require('../controllers/newsFeedController');
 
 //API routes
 const router = express.Router();
@@ -7,6 +8,6 @@ const router = express.Router();
 router.use(authController.protect);
 
 router.route('/')
-    .post(uploadPostPhoto, newsfeedController.createPost)
+    .post(newsfeedController.uploadPostPhoto, newsfeedController.createPost)
 
 module.exports = router;

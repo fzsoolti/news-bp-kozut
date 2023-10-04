@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from 'src/app/models/User';
 import { UserService } from 'src/app/services/user.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-main',
@@ -10,9 +11,10 @@ import { UserService } from 'src/app/services/user.service';
 export class MainComponent implements OnInit{
   user!: User;
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
+    this.testFunc();
     this.getMe();
   }
 
@@ -22,9 +24,13 @@ export class MainComponent implements OnInit{
         this.user = response.data.user;
       },
       error: (error) => {
-        // console.log(error);
+        console.log(error);
       },
     });
+  }
+
+  private testFunc(){
+    console.log(this.authService.user.value);
   }
 
 }

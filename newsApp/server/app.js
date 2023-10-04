@@ -14,6 +14,8 @@ app.use(cors({
     origin: process.env.NODE_ENV === 'development' ? process.env.CLIENT_URL_DEV : process.env.CLIENT_URL_PROD
 }));
 
+app.use('/images', express.static('./uploads/img'));
+
 //API ROUTES
 const apiPrefix = "/api/v1";
 

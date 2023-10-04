@@ -1,5 +1,7 @@
 const factory = require('./handlerFactory');
 const NewsfeedPost = require("../models/newsFeedPostModel");
+
+//-----------------------------IMAGE UPLOAD-----------------------------
 const multer = require('multer');
 
 const multerStorage = multer.diskStorage({
