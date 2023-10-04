@@ -11,6 +11,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
 import { MainComponent } from './components/main/main.component';
 import { CreatePostComponent } from './components/main/news-feed/create-post/create-post.component';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { CreatePostComponent } from './components/main/news-feed/create-post/cre
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    MaterialDesignModule
+    MaterialDesignModule,
+    QuillModule.forRoot(),
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true},
