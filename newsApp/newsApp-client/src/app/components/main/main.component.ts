@@ -14,23 +14,20 @@ export class MainComponent implements OnInit{
   constructor(private userService: UserService, private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.testFunc();
     this.getMe();
   }
 
   private getMe() {
-    this.userService.getMe().subscribe({
-      next: (response) => {
-        this.user = response.data.user;
-      },
-      error: (error) => {
-        console.log(error);
-      },
-    });
-  }
-
-  private testFunc(){
-    console.log(this.authService.user.value);
+    if (this.authService.user.value) {
+      this.userService.getMe().subscribe({
+        next: (response) => {
+          this.user = response.data.user;
+        },
+        error: (error) => {
+          console.log(error);
+        },
+      });
+    }
   }
 
 }

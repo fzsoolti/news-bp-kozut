@@ -1,5 +1,6 @@
 const factory = require('./handlerFactory');
-const NewsfeedPost = require("../models/newsFeedPostModel");
+const NewsFeedPost = require("../models/newsFeedPostModel");
+const catchAsync = require("../utils/catchAsync");
 
 //-----------------------------IMAGE UPLOAD-----------------------------
 const multer = require('multer');
@@ -24,10 +25,26 @@ const multerFiler = (req, file, cb) => {
 
 const upload = multer({
   storage: multerStorage,
+  limits: { fileSize: 1024 * 1024 * 10 },
   fileFilter: multerFiler
 });
 
 exports.uploadPostPhoto = upload.single('image');
 
 //-----------------------------POST-----------------------------
-exports.createPost = factory.createOne(NewsfeedPost, "post");
+//exports.createPost = factory.createOne(NewsfeedPost, "post");
+
+exports.createPost = catchAsync(async (req, res, next) => {
+    if (req.file) {
+        req.body.image = req.file.filename;
+      }
+
+    const newPost = await NewsFeedPost.create(req.body);
+
+    res.status(201).json({
+      status: "success",
+      data: {
+        post: newPost,
+      },
+    });
+  });

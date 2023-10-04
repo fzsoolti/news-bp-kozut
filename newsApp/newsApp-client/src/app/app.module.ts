@@ -10,6 +10,7 @@ import { TopNavbarComponent } from './components/main/top-navbar/top-navbar.comp
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
 import { MainComponent } from './components/main/main.component';
+import { CreatePostComponent } from './components/main/news-feed/create-post/create-post.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { MainComponent } from './components/main/main.component';
     NewsFeedComponent,
     TopNavbarComponent,
     AuthComponent,
-    MainComponent
+    MainComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

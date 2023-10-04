@@ -18,6 +18,11 @@ const handleCastErrorDB = (err) => {
     const message = `Érvénytelen adatok!😢 ${errors.join('. ')}`;
     return new AppError(message, 400);
   };
+
+  const handleMulterError = (err) =>{
+    const message = `❌ Hiba a fájl feltöltése során: ${err.message}.`;
+    return new AppError(message,400);
+  }
   
   //SEND ERROR
   const sendErrorDev = (err, res) => {
@@ -55,6 +60,7 @@ module.exports = (err, req, res, next) => {
       if (err.name === "CastError") err = handleCastErrorDB(err);
       if (err.code === 11000) err = handleDuplicateFieldsDB(err);
       if (err.name === "ValidationError") err = handleValidationErrorDB(err);
+      if (err.name === "MulterError") err = handleMulterError(err);
   
       sendErrorProd(err, res);
     }
