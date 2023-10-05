@@ -21,6 +21,9 @@
       <div class="col"><small>Létrehozás dátuma: {{newsFeedPost.createdAt | date:'YYYY.MM.dd, HH:mm:ss' }}</small></div>
       <div class="col"><small>Utoljára módosítva: {{newsFeedPost.lastModified | date:'YYYY.MM.dd, HH:mm:ss'}}</small></div>
     </div>
-    <button *ngIf="currentUser && currentUser._id == newsFeedPost.createdBy._id" class="btn btn-outline-danger btn-sm mb-2">Módosítás</button>
+    <div *ngIf="currentUser && currentUser._id == newsFeedPost.createdBy._id" class="pb-2">
+      <button  class="btn btn-outline-warning btn-sm me-2">Módosítás</button>
+      <button  class="btn btn-danger btn-sm">Törlés</button>
+    </div>
   </div>
 </div>
