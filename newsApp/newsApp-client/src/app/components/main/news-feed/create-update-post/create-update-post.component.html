@@ -1,0 +1,51 @@
+<a routerLink="../" class="ms-3">Vissza</a>
+
+<div class="container">
+  <div class="editor m-3 mt-0">
+    <form #createNewsFeedPostForm="ngForm" (ngSubmit)="onSubmitCreateNewsFeedPost()"
+      autocomplete="off">
+
+      <div class="row p-1">
+        <div class="input-group">
+          <div class="input-group-text">Cím</div>
+          <input type="text" id="title" class="form-control" name="title" [(ngModel)]="title" required />
+        </div>
+      </div>
+
+      <div *ngIf="!editMode" class="row p-1">
+        <div class="input-group">
+          <div class="input-group-text">Kép</div>
+          <input type="file" id="image" class="form-control" name="image" (change)="onFileSelected($event)" ngModel
+            required />
+        </div>
+      </div>
+
+      <div *ngIf="editMode" class="row p-1">
+        <div class="input-group">
+          <div class="input-group-text">Új Kép feltöltése</div>
+          <input type="file" id="image" class="form-control" name="image" (change)="onFileSelected($event)" ngModel
+            />
+        </div>
+      </div>
+
+      <quill-editor [(ngModel)]="editorContent" [ngModelOptions]="{standalone: true}" class="p-1"
+        style="width: 100%;"></quill-editor>
+      <textarea id="content" class="form-control" name="content" [(ngModel)]="editorContent" required [hidden]="true"></textarea>
+
+      <button *ngIf="!editMode" [disabled]="!createNewsFeedPostForm.valid" type="submit" class="btn btn-outline-danger mt-1">
+        Létrehozás</button>
+    </form>
+    <button *ngIf="editMode" [disabled]="!createNewsFeedPostForm.valid" type="button" (click)="onUpdatePost()" class="btn btn-outline-danger mt-1">
+      Szerkesztés</button>
+  </div>
+
+  <div class="preview ql-editor" *ngIf="editorContent">
+    <h3>Előnézet:</h3>
+    <div class="postIMG-container">
+      <img *ngIf="selectedImage" class="img-fluid postIMG" [src]="selectedImage" alt="Poszt kép">
+      <img *ngIf="currentImage && !selectedImage" class="img-fluid postIMG" [src]="imageHost+'/'+currentImage" alt="Poszt kép">
+      <h2 class="postTitle">{{title}}</h2>
+    </div>
+    <div [innerHTML]="sanitizeContent(editorContent)"></div>
+  </div>
+</div>

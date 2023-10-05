@@ -10,7 +10,7 @@ import { TopNavbarComponent } from './components/main/top-navbar/top-navbar.comp
 import { AuthComponent } from './components/auth/auth.component';
 import { AuthInterceptorService } from './components/auth/auth-interceptor.service';
 import { MainComponent } from './components/main/main.component';
-import { CreatePostComponent } from './components/main/news-feed/create-post/create-post.component';
+import { CreateUpdatePostComponent } from './components/main/news-feed/create-update-post/create-update-post.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostDetialsComponent } from './components/main/news-feed/post-detials/post-detials.component';
@@ -22,7 +22,7 @@ import { PostDetialsComponent } from './components/main/news-feed/post-detials/p
     TopNavbarComponent,
     AuthComponent,
     MainComponent,
-    CreatePostComponent,
+    CreateUpdatePostComponent,
     PostDetialsComponent
   ],
   imports: [

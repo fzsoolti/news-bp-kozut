@@ -9,6 +9,8 @@ router.route('/')
     .post(authController.protect, newsfeedController.uploadPostPhoto, newsfeedController.createPost);
 
 router.route('/:id')
-    .get(newsfeedController.getVisitById);
+    .get(newsfeedController.getNewsFeedPostById)
+    .patch(authController.protect,newsfeedController.checkPostOwner, newsfeedController.uploadPostPhoto,newsfeedController.updateNewsFeedPostById)
+    .delete(authController.protect,newsfeedController.checkPostOwner, newsfeedController.deleteNewsFeedPostById);
 
 module.exports = router;

@@ -31,9 +31,10 @@ const upload = multer({
 
 exports.uploadPostPhoto = upload.single('image');
 
-//-----------------------------POST-----------------------------
-//exports.createPost = factory.createOne(NewsfeedPost, "post");
+//-----------------------------GET-----------------------------
+exports.getNewsFeedPostById = factory.getOneById(NewsFeedPost, "post",{ path: 'createdBy' });
 
+//-----------------------------POST-----------------------------
 exports.createPost = catchAsync(async (req, res, next) => {
     if (!req.file)  return next(new AppError('Kérlek, tölts fel egy képet!', 400));
 
@@ -50,4 +51,44 @@ exports.createPost = catchAsync(async (req, res, next) => {
     });
   });
 
-  exports.getVisitById = factory.getOneById(NewsFeedPost, "post",{ path: 'createdBy' });
+//-----------------------------PATCH-----------------------------
+exports.updateNewsFeedPostById = catchAsync(async (req, res, next) => {
+
+  if (req.file){
+    req.body.image = req.file.filename;
+  }
+
+  const updatedPost = await NewsFeedPost.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+  
+  if (!updatedPost) {
+    return next(new AppError(`Nem található Poszt ezzel az ID-val!😢`,404));
+  }
+
+  updatedPost.lastModified = new Date();
+  await updatedPost.save();
+  
+  res.status(200).json({
+    status: "success",
+    data: {
+      updatedPost,
+    },
+  });
+
+});
+
+//-----------------------------DELETE-----------------------------
+exports.deleteNewsFeedPostById = factory.deleteOneById(NewsFeedPost,"post");
+
+//-----------------------------acces protection-----------------------------
+exports.checkPostOwner = catchAsync(async (req, res, next) => {
+ const newsFeedPost = await NewsFeedPost.findById(req.params.id);
+
+  if (newsFeedPost.createdBy.toString() != req.user._id.toString()) {
+    return next(new AppError('Csak saját poszt módosítható!', 401));
+  }
+
+  next();
+});
