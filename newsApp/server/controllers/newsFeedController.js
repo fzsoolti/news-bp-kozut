@@ -35,11 +35,13 @@ exports.uploadPostPhoto = upload.single('image');
 //exports.createPost = factory.createOne(NewsfeedPost, "post");
 
 exports.createPost = catchAsync(async (req, res, next) => {
+  console.log(req);
+
     if (req.file) {
         req.body.image = req.file.filename;
       }
 
-    req.body.createdBy = req.user.id;
+    req.body.createdBy = "req.user._id";
 
     const newPost = await NewsFeedPost.create(req.body);
 
