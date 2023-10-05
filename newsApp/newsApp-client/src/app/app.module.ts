@@ -13,7 +13,8 @@ import { MainComponent } from './components/main/main.component';
 import { CreateUpdatePostComponent } from './components/main/news-feed/create-update-post/create-update-post.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PostDetialsComponent } from './components/main/news-feed/post-detials/post-detials.component';
+import { PostDetailsComponent } from './components/main/news-feed/post-details/post-details.component';
+import { NewsFeedPostComponent } from './components/main/news-feed/news-feed-post/news-feed-post.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { PostDetialsComponent } from './components/main/news-feed/post-detials/p
     AuthComponent,
     MainComponent,
     CreateUpdatePostComponent,
-    PostDetialsComponent
+    PostDetailsComponent,
+    NewsFeedPostComponent
   ],
   imports: [
     BrowserModule,

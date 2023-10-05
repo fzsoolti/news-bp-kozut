@@ -1,0 +1,7 @@
+<div *ngIf="newsFeedPost" class="newsFeedPost ql-editor d-flex flex-column">
+  <img [src]="imagePrefix+'/'+newsFeedPost.image" [alt]="'Poszt fotó'" class="img-fluid eventIMG">
+  <div class="row m-0 postTitle">{{newsFeedPost.title | slice:0:45}}{{ newsFeedPost.title.length > 45 ? '...' : '' }}</div>
+  <div class="row m-0" class="p-2 postContent" [innerHTML]="sanitizeContent(newsFeedPost.content | slice:0:700)"></div>
+  <strong style="font-size: xx-large;" style="text-align: right;">{{ newsFeedPost.content.length > 700 ? '...' : '' }}</strong>
+  <button class="btn btn-outline-info mt-auto" (click)="checkPostDetails()">Tovább</button>
+</div>

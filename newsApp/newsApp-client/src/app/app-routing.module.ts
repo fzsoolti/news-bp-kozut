@@ -5,7 +5,7 @@ import { AuthComponent } from './components/auth/auth.component';
 import { MainComponent } from './components/main/main.component';
 import { CreateUpdatePostComponent } from './components/main/news-feed/create-update-post/create-update-post.component';
 import { UserAuthGuard } from './components/auth/userAuth.guard';
-import { PostDetialsComponent } from './components/main/news-feed/post-detials/post-detials.component';
+import { PostDetailsComponent } from './components/main/news-feed/post-details/post-details.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -15,7 +15,7 @@ const routes: Routes = [
     { path: 'newsfeed', component: NewsFeedComponent},
     { path: 'add', component: CreateUpdatePostComponent, canActivate:[UserAuthGuard] },
     { path: 'update', component: CreateUpdatePostComponent, canActivate:[UserAuthGuard] },
-    { path: 'newsDetail', component: PostDetialsComponent},
+    { path: 'newsDetail', component: PostDetailsComponent},
   ],
   },
 ];

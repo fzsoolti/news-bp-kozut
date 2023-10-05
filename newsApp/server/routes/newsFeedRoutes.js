@@ -6,6 +6,7 @@ const newsfeedController = require('../controllers/newsFeedController');
 const router = express.Router();
 
 router.route('/')
+    .get(newsfeedController.getNewsFeedPosts)
     .post(authController.protect, newsfeedController.uploadPostPhoto, newsfeedController.createPost);
 
 router.route('/:id')

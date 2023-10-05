@@ -1,2 +1,9 @@
-<p>news-feed works!</p>
-<a class="btn btn-danger" [routerLink]="'/add'">Új hír hozzáadása</a>
+<a *ngIf="currentUser" class="btn btn-danger m-2" [routerLink]="'/add'">Új hír hozzáadása</a>
+
+<div class="container">
+  <div class="row" data-masonry='{"percentPosition": true }'>
+    <div class="col-xl-4 col-lg-6 col-sm-12 mb-2" *ngFor="let newsFeedPost of newsFeedPosts">
+      <app-news-feed-post [newsFeedPost]="newsFeedPost"></app-news-feed-post>
+    <div>
+  </div>
+</div>

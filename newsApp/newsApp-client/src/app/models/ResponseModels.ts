@@ -14,3 +14,12 @@ export interface GetNewsfeedPostResponse {
     post: NewsFeedPost;
   };
 }
+
+export interface GetNewsfeedPostsResponse {
+  status: string;
+  results: number;
+  numOfResults: number;
+  data: {
+    posts: NewsFeedPost[];
+  };
+}

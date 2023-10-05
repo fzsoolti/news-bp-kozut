@@ -3,36 +3,9 @@ const NewsFeedPost = require("../models/newsFeedPostModel");
 const catchAsync = require("../utils/catchAsync");
 const AppError = require('../utils/appError');
 
-//-----------------------------IMAGE UPLOAD-----------------------------
-const multer = require('multer');
-
-const multerStorage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/img');
-    },
-    filename: (req, file, cb) => {
-        const ext = file.mimetype.split('/')[1];
-        cb(null, `post-${file.originalname}-${Date.now()}.${ext}`);
-    }
-});
-
-const multerFiler = (req, file, cb) => {
-  if (file.mimetype.startsWith('image')) {
-    cb(null, true)
-  } else {
-    cb(new AppError('Érvénytelen formátum!',400), false);
-  }
-}
-
-const upload = multer({
-  storage: multerStorage,
-  fileFilter: multerFiler
-});
-
-exports.uploadPostPhoto = upload.single('image');
-
 //-----------------------------GET-----------------------------
 exports.getNewsFeedPostById = factory.getOneById(NewsFeedPost, "post",{ path: 'createdBy' });
+exports.getNewsFeedPosts = factory.getAll(NewsFeedPost, "posts");
 
 //-----------------------------POST-----------------------------
 exports.createPost = catchAsync(async (req, res, next) => {
@@ -82,7 +55,7 @@ exports.updateNewsFeedPostById = catchAsync(async (req, res, next) => {
 //-----------------------------DELETE-----------------------------
 exports.deleteNewsFeedPostById = factory.deleteOneById(NewsFeedPost,"post");
 
-//-----------------------------acces protection-----------------------------
+//-----------------------------access protection-----------------------------
 exports.checkPostOwner = catchAsync(async (req, res, next) => {
  const newsFeedPost = await NewsFeedPost.findById(req.params.id);
 
@@ -92,3 +65,31 @@ exports.checkPostOwner = catchAsync(async (req, res, next) => {
 
   next();
 });
+
+//-----------------------------IMAGE UPLOAD-----------------------------
+const multer = require('multer');
+
+const multerStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'uploads/img');
+    },
+    filename: (req, file, cb) => {
+        const ext = file.mimetype.split('/')[1];
+        cb(null, `post-${file.originalname}-${Date.now()}.${ext}`);
+    }
+});
+
+const multerFiler = (req, file, cb) => {
+  if (file.mimetype.startsWith('image')) {
+    cb(null, true)
+  } else {
+    cb(new AppError('Érvénytelen formátum!',400), false);
+  }
+}
+
+const upload = multer({
+  storage: multerStorage,
+  fileFilter: multerFiler
+});
+
+exports.uploadPostPhoto = upload.single('image');
