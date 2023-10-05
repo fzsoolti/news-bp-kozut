@@ -11,7 +11,7 @@ export class NewsfeedService {
 
   constructor(private http: HttpClient) { }
 
-  createNewsFeedPost(newsfeedPost: Object){
+  createNewsFeedPost(newsfeedPost: FormData){
     return this.http.post<GetNewsfeedPostResponse>(`${this.URI}`, newsfeedPost);
   }
 }
