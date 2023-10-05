@@ -1,3 +1,5 @@
+import { User } from "./User";
+
 export interface NewsFeedPost {
   _id: string;
   title: string;
@@ -5,5 +7,5 @@ export interface NewsFeedPost {
   content: string;
   createdAt: Date;
   lastModified: Date;
-  createdBy: string;
+  createdBy: User;
 }

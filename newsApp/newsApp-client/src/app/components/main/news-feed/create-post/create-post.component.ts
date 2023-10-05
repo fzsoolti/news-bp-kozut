@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class CreatePostComponent {
   editorContent: string = '';
   fileImage!: File;
 
-  constructor(private sanitizer: DomSanitizer, private newsfeedService: NewsfeedService) {}
+  constructor(private newsfeedService: NewsfeedService, private router: Router) {}
 
   onSubmitCreateNewsFeedPost(form:NgForm){
     const newsFeedPost = form.value;
@@ -23,7 +23,9 @@ export class CreatePostComponent {
 
     this.newsfeedService.createNewsFeedPost(formData).subscribe({
       next: (res) => {
-        console.log(res);
+        this.router.navigate(["/newsDetail"], {
+          queryParams: {id: res.data.post._id},
+        });
       },
       error: (err) => {
         console.log(err);
@@ -35,11 +37,8 @@ export class CreatePostComponent {
     this.fileImage = event.target.files[0];
   }
 
-  sanitizeContent(content: string) {
-    if (content) {
-      return this.sanitizer.bypassSecurityTrustHtml(content.replace(/&lt;/g, '<').replace(/&gt;/g, '>'));
-    }
-    return '';
+  sanitizeContent(content: string){
+    return this.newsfeedService.sanitizeContent(content);
   }
 
 }

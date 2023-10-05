@@ -5,9 +5,10 @@ const newsfeedController = require('../controllers/newsFeedController');
 //API routes
 const router = express.Router();
 
-router.use(authController.protect);
-
 router.route('/')
-    .post(newsfeedController.uploadPostPhoto, newsfeedController.createPost)
+    .post(authController.protect, newsfeedController.uploadPostPhoto, newsfeedController.createPost);
+
+router.route('/:id')
+    .get(newsfeedController.getVisitById);
 
 module.exports = router;

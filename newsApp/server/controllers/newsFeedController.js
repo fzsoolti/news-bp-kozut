@@ -49,3 +49,5 @@ exports.createPost = catchAsync(async (req, res, next) => {
       },
     });
   });
+
+  exports.getVisitById = factory.getOneById(NewsFeedPost, "post",{ path: 'createdBy' });

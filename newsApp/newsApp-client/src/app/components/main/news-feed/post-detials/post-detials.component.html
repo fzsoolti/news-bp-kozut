@@ -1,1 +1,26 @@
-<p>post-detials works!</p>
+<div *ngIf="!newsFeedPost">
+  Nem található ilyen poszt 😢
+</div>
+
+<a routerLink="../" class="ms-3">Vissza</a>
+
+<div *ngIf="newsFeedPost">
+  <div class="container mb-3">
+    <div class="postIMG-container">
+      <img class="img-fluid postIMG" [src]="imagePrefix+'/'+newsFeedPost.image" alt="Poszt kép">
+      <h2 class="postTitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</h2>
+    </div>
+    <div class="content ql-editor">
+      <div [innerHTML]="sanitizeContent(newsFeedPost.content)"></div>
+    </div>
+    <hr>
+    <div class="row">
+      <small>Létrehozta: <strong>{{newsFeedPost.createdBy.username}}</strong></small>
+    </div>
+    <div class="row" style="color: gray;">
+      <div class="col"><small>Létrehozás dátuma: {{newsFeedPost.createdAt | date:'YYYY.MM.dd, HH:mm:ss' }}</small></div>
+      <div class="col"><small>Utoljára módosítva: {{newsFeedPost.lastModified | date:'YYYY.MM.dd, HH:mm:ss'}}</small></div>
+    </div>
+    <button *ngIf="currentUser && currentUser._id == newsFeedPost.createdBy._id" class="btn btn-outline-danger btn-sm mb-2">Módosítás</button>
+  </div>
+</div>
