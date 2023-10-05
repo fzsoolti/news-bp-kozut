@@ -16,7 +16,7 @@ exports.googleAuth = catchAsync(async (req, res, next) => {
         access_type: 'offline',
         scope: ['https://www.googleapis.com/auth/userinfo.email', 'https://www.googleapis.com/auth/userinfo.profile'],
     });
-    
+
     res.redirect(authUrl);
     // res.json({authUrl});
 });
@@ -26,11 +26,11 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
     try {
         const { tokens } = await oAuth2Client.getToken(code);
         const idToken = tokens.id_token;
-        const decoded = await oAuth2Client.verifyIdToken({idToken});
+        const decoded = await oAuth2Client.verifyIdToken({ idToken });
         const payload = decoded.getPayload()
         const expiresIn = payload.exp;
 
-        const user = await User.findOne({sub: payload.sub});
+        const user = await User.findOne({ sub: payload.sub });
 
         if (!user) {
             await User.create({
@@ -42,7 +42,7 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
             });
         }
 
-        await User.findOneAndUpdate({ sub: payload.sub }, { lastLogin: new Date() , pictureURL: payload.picture});
+        await User.findOneAndUpdate({ sub: payload.sub }, { lastLogin: new Date(), pictureURL: payload.picture });
 
         const clientURL = process.env.NODE_ENV === 'development' ? process.env.CLIENT_URL_DEV : process.env.CLIENT_URL_PROD;
 
@@ -54,7 +54,7 @@ exports.googleAuthCallBack = catchAsync(async (req, res, next) => {
         //     },
         // });
 
-        res.redirect(clientURL+"/auth"+"?token="+idToken+"&exp="+expiresIn);
+        res.redirect(clientURL + "/auth" + "?token=" + idToken + "&exp=" + expiresIn);
     } catch (error) {
         //return next(new AppError('Hitelesítési hiba történt', 500));
         window.alert("Hitelesítési hiba történt");
@@ -72,14 +72,18 @@ exports.protect = catchAsync(async (req, res, next) => {
         return next(new AppError('Nincs bejelentkezve!', 401));
     }
 
-    const decoded = await oAuth2Client.verifyIdToken({idToken});
-    const payload = decoded.getPayload()
+    try {
+        const decoded = await oAuth2Client.verifyIdToken({ idToken });
+        const payload = decoded.getPayload()
 
-    const currentUser = await User.findOne({sub: payload.sub});
-    if (!currentUser) {
-        return next(new AppError('A tokenhez tartozó felhasználó már nem létezik!', 401));
+        const currentUser = await User.findOne({ sub: payload.sub });
+        if (!currentUser) {
+            return next(new AppError('A tokenhez tartozó felhasználó már nem létezik!', 401));
+        }
+
+        req.user = currentUser;
+        next();
+    } catch (error) {
+        return next(new AppError('Token azonosítási hiba', 401));
     }
-
-    req.user = currentUser;
-    next();
 });

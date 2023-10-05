@@ -23,12 +23,12 @@ export class AuthInterceptorService implements HttpInterceptor {
         }
 
         const headerDict = {
-            'Authorization': 'Bearer '+user?.token
+            'Authorization': 'Bearer '+user?.token,
           }
 
         const modifiedReq = req.clone({
             headers: new HttpHeaders(headerDict)
-        })
+        });
 
         return next.handle(modifiedReq);
       })

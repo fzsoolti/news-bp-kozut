@@ -12,6 +12,7 @@ import { AuthInterceptorService } from './components/auth/auth-interceptor.servi
 import { MainComponent } from './components/main/main.component';
 import { CreatePostComponent } from './components/main/news-feed/create-post/create-post.component';
 import { QuillModule } from 'ngx-quill';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,8 @@ import { QuillModule } from 'ngx-quill';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     HttpClientModule,
     MaterialDesignModule,
