@@ -39,6 +39,8 @@ exports.createPost = catchAsync(async (req, res, next) => {
         req.body.image = req.file.filename;
       }
 
+    req.body.createdBy = req.user.id;
+
     const newPost = await NewsFeedPost.create(req.body);
 
     res.status(201).json({
