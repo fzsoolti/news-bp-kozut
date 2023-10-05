@@ -8,7 +8,7 @@
   <div class="container mb-3">
     <div class="postIMG-container">
       <img class="img-fluid postIMG" [src]="imagePrefix+'/'+newsFeedPost.image" alt="Poszt kép">
-      <h2 class="postTitle">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.</h2>
+      <h2 class="postTitle">{{newsFeedPost.title}}</h2>
     </div>
     <div class="content ql-editor">
       <div [innerHTML]="sanitizeContent(newsFeedPost.content)"></div>
@@ -21,6 +21,37 @@
       <div class="col"><small>Létrehozás dátuma: {{newsFeedPost.createdAt | date:'YYYY.MM.dd, HH:mm:ss' }}</small></div>
       <div class="col"><small>Utoljára módosítva: {{newsFeedPost.lastModified | date:'YYYY.MM.dd, HH:mm:ss'}}</small></div>
     </div>
-    <button *ngIf="currentUser && currentUser._id == newsFeedPost.createdBy._id" class="btn btn-outline-danger btn-sm mb-2">Módosítás</button>
+    <div *ngIf="currentUser && currentUser._id == newsFeedPost.createdBy._id" class="pb-2">
+      <button  class="btn btn-outline-warning btn-sm me-2" (click)="navigateToUpdate()">Módosítás</button>
+      <button  class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#deletePostModal">Törlés</button>
+    </div>
+  </div>
+</div>
+
+<!-- DELETE POST MODAL -->
+<div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog"
+  aria-labelledby="deletePostModalTitle" aria-hidden="true" data-bs-backdrop="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deletePostModalLongTitle">
+          Poszt törlése
+        </h5>
+        <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" style="text-align: center">
+        Biztos hogy törlöd ezt a posztot?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Kilépés
+        </button>
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" (click)="onDeletePost()">
+          Törlés
+        </button>
+      </div>
+    </div>
   </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { User } from 'src/app/models/User';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
@@ -16,7 +16,7 @@ export class PostDetialsComponent implements OnInit{
   imagePrefix = environment.host+"/images";
   currentUser!: User;
 
-  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService) {}
+  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
@@ -47,8 +47,25 @@ export class PostDetialsComponent implements OnInit{
     })
   }
 
+  navigateToUpdate(){
+    this.router.navigate(["/update"], {
+      queryParams: {postId: this.newsFeedPost._id},
+    });
+  }
+
   sanitizeContent(content: string){
     return this.newsFeedService.sanitizeContent(content);
+  }
+
+  onDeletePost(){
+    this.newsFeedService.deleteNewsFeedPostById(this.newsFeedPost._id).subscribe({
+      next:() => {
+        this.router.navigate(["./"]);
+      },
+      error: (err) => {
+        console.log(err);
+      }
+    })
   }
 
 }
