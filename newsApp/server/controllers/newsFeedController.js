@@ -1,6 +1,7 @@
 const factory = require('./handlerFactory');
 const NewsFeedPost = require("../models/newsFeedPostModel");
 const catchAsync = require("../utils/catchAsync");
+const AppError = require('../utils/appError');
 
 //-----------------------------IMAGE UPLOAD-----------------------------
 const multer = require('multer');
@@ -25,7 +26,6 @@ const multerFiler = (req, file, cb) => {
 
 const upload = multer({
   storage: multerStorage,
-  limits: { fileSize: 1024 * 1024 * 10 },
   fileFilter: multerFiler
 });
 
@@ -35,10 +35,9 @@ exports.uploadPostPhoto = upload.single('image');
 //exports.createPost = factory.createOne(NewsfeedPost, "post");
 
 exports.createPost = catchAsync(async (req, res, next) => {
-    if (req.file) {
-        req.body.image = req.file.filename;
-      }
+    if (!req.file)  return next(new AppError('Kérlek, tölts fel egy képet!', 400));
 
+    req.body.image = req.file.filename;
     req.body.createdBy = req.user.id;
 
     const newPost = await NewsFeedPost.create(req.body);
@@ -50,3 +49,5 @@ exports.createPost = catchAsync(async (req, res, next) => {
       },
     });
   });
+
+  exports.getVisitById = factory.getOneById(NewsFeedPost, "post",{ path: 'createdBy' });

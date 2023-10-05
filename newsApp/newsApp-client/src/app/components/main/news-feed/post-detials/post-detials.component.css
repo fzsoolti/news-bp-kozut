@@ -1,0 +1,25 @@
+.postIMG-container {
+  position: relative;
+  width: 100%;
+  height: 50vh;
+}
+
+.postIMG {
+  object-fit: cover;
+  object-position: center;
+  width: 100%;
+  height: 100%;
+}
+
+.postTitle {
+  position: absolute;
+  bottom: 0;
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 5px 10px;
+  z-index: 1;
+  width: 100%;
+}
+
+.container{
+  background-color: rgb(241, 241, 241);
+}

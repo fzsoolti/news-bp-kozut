@@ -13,6 +13,7 @@ import { MainComponent } from './components/main/main.component';
 import { CreatePostComponent } from './components/main/news-feed/create-post/create-post.component';
 import { QuillModule } from 'ngx-quill';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PostDetialsComponent } from './components/main/news-feed/post-detials/post-detials.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     TopNavbarComponent,
     AuthComponent,
     MainComponent,
-    CreatePostComponent
+    CreatePostComponent,
+    PostDetialsComponent
   ],
   imports: [
     BrowserModule,
