@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { User } from 'src/app/models/User';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
@@ -16,7 +17,7 @@ export class PostDetailsComponent implements OnInit{
   imagePrefix = environment.host+"/images";
   currentUser!: User;
 
-  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService, private router: Router) {}
+  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService, private router: Router, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
@@ -26,12 +27,16 @@ export class PostDetailsComponent implements OnInit{
   }
 
   getPostById(postId: string){
+    this.loadingService.showLoader();
+
     this.newsFeedService.getNewsFeedPostById(postId).subscribe({
       next: (res) => {
         this.newsFeedPost = res.data.post;
+        this.loadingService.hideLoader();
       },
       error: (err) => {
         console.log(err);
+        this.loadingService.hideLoader();
       }
     })
   }
