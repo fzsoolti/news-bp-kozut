@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -13,6 +14,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./post-details.component.css']
 })
 export class PostDetailsComponent implements OnInit{
+  error!:HttpErrorResponse | null;
   newsFeedPost!: NewsFeedPost;
   imagePrefix = environment.host+"/images";
   currentUser!: User;
@@ -28,6 +30,7 @@ export class PostDetailsComponent implements OnInit{
 
   getPostById(postId: string){
     this.loadingService.showLoader();
+    this.error = null;
 
     this.newsFeedService.getNewsFeedPostById(postId).subscribe({
       next: (res) => {
@@ -35,19 +38,21 @@ export class PostDetailsComponent implements OnInit{
         this.loadingService.hideLoader();
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
         this.loadingService.hideLoader();
       }
     })
   }
 
   getMe(){
+    this.error = null;
+
     this.userService.getMe().subscribe({
       next: (res) => {
         this.currentUser = res.data.user;
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
       }
     })
   }
@@ -63,12 +68,17 @@ export class PostDetailsComponent implements OnInit{
   }
 
   onDeletePost(){
+    this.loadingService.showLoader();
+    this.error = null;
+
     this.newsFeedService.deleteNewsFeedPostById(this.newsFeedPost._id).subscribe({
       next:() => {
+        this.loadingService.hideLoader();
         this.router.navigate(["./"]);
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
+        this.loadingService.hideLoader();
       }
     })
   }

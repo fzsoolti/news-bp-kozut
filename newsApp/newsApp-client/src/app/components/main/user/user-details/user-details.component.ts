@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { LoadingService } from 'src/app/components/loading/loading.service';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
@@ -10,6 +11,7 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-details.component.css']
 })
 export class UserDetailsComponent implements OnInit{
+  error!:HttpErrorResponse | null;
   user!: User;
   myPosts!: NewsFeedPost[];
 
@@ -21,6 +23,8 @@ export class UserDetailsComponent implements OnInit{
 
   getMyDetails(){
     this.loadingService.showLoader();
+    this.error = null;
+
     this.userService.getDetailedMe().subscribe({
       next: (res) => {
         this.user = res.data.user;
@@ -28,7 +32,7 @@ export class UserDetailsComponent implements OnInit{
         this.loadingService.hideLoader();
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
         this.loadingService.hideLoader();
       }
     })

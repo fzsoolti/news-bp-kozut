@@ -1,3 +1,7 @@
+<div class="alertTop">
+  <app-error-alert [error]="error" [closeable]="true"></app-error-alert>
+</div>
+
 <a routerLink="../" class="ms-3">Vissza</a>
 
 <div class="container userDetails">
@@ -6,7 +10,7 @@
   </div>
 
   <div *ngIf="user">
-    <img [src]="user.pictureURL" [alt]="'User fotó'" class="img-fluid postIMG">
+    <img [src]="user.pictureURL" [alt]="'User fotó'" referrerpolicy="no-referrer" class="img-fluid postIMG">
     <h2 class="m-0">{{user.username}}</h2>
     <small>{{user.email}}</small>
     <p style="color: gray;">Létrehozva: {{user.createdAt | date:'YYYY.MM.dd, HH:mm'}}</p>

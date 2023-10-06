@@ -1,4 +1,4 @@
-import { HttpParams } from '@angular/common/http';
+import { HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
@@ -12,6 +12,7 @@ import { LoadingService } from '../../loading/loading.service';
   styleUrls: ['./news-feed.component.css']
 })
 export class NewsFeedComponent implements OnInit{
+  error!:HttpErrorResponse | null;
   newsFeedPosts!: NewsFeedPost[];
   numOfAllPosts!: number;
 
@@ -32,6 +33,7 @@ export class NewsFeedComponent implements OnInit{
 
   private getNewsfeedPosts(limit: number, page: number) {
     this.loadingService.showLoader();
+    this.error = null;
 
     const params = new HttpParams()
       .set('limit', limit.toString())
@@ -44,7 +46,7 @@ export class NewsFeedComponent implements OnInit{
         this.loadingService.hideLoader();
       },
       error: (error) => {
-        console.log(error);
+        this.error = error;
         this.loadingService.hideLoader();
       },
     });

@@ -1,3 +1,7 @@
+<div class="alertTop">
+  <app-error-alert [error]="error" [closeable]="true"></app-error-alert>
+</div>
+
 <a *ngIf="currentUser" class="btn btn-danger m-2" [routerLink]="'/add'">Új hír hozzáadása</a>
 
 <div *ngIf="newsFeedPosts && newsFeedPosts.length == 0 || !newsFeedPosts">
