@@ -1,0 +1,12 @@
+<div class="paginator mb-3">
+  <div style="display: flex; align-items: center; ">
+    <mat-icon (click)="currentPage > 1 ? onChangePages(currentPage-1,currentLimit) : null">navigate_before</mat-icon>
+    <span>{{currentPage}}</span>
+    <mat-icon (click)="numOfAllPosts > currentPage*currentLimit ? onChangePages(currentPage+1,currentLimit) : null">navigate_next</mat-icon>
+  </div>
+  <select class="form-control-sm limitSelect" (change)="onChangeLimit(currentPage, $event.target)">
+    <option>20</option>
+    <option>30</option>
+    <option>50</option>
+  </select>
+</div>

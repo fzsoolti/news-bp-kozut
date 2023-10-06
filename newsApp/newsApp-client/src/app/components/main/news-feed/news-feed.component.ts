@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
 import { AuthService } from '../../auth/auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-news-feed',
@@ -11,13 +12,21 @@ import { AuthService } from '../../auth/auth.service';
 })
 export class NewsFeedComponent implements OnInit{
   newsFeedPosts!: NewsFeedPost[];
+  numOfAllPosts!: number;
 
-  constructor(private newsFeedService: NewsfeedService, private authService: AuthService) {}
+  constructor(private newsFeedService: NewsfeedService, private authService: AuthService, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     const limit = 20;
     const page = 1;
-    this.getNewsfeedPosts(limit, page);
+
+    this.route.queryParams.subscribe(params => {
+      if (params["page"] && params["limit"] && +params["limit"] < 51) {
+        this.getNewsfeedPosts(params["limit"], params["page"]);
+      } else{
+        this.getNewsfeedPosts(limit, page);
+      }
+    });
   }
 
   private getNewsfeedPosts(limit: number, page: number) {
@@ -29,6 +38,7 @@ export class NewsFeedComponent implements OnInit{
     this.newsFeedService.getNewsFeedPosts(params).subscribe({
       next: (response) => {
         this.newsFeedPosts = response.data.posts;
+        this.numOfAllPosts = response.numOfResults;
       },
       error: (error) => {
         console.log(error);
