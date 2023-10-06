@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoadingService } from 'src/app/components/loading/loading.service';
@@ -11,6 +12,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./create-update-post.component.css']
 })
 export class CreateUpdatePostComponent implements OnInit{
+  error!:HttpErrorResponse | null;
   imageHost = environment.host+"/images";
   editMode:boolean=false;
 
@@ -33,6 +35,8 @@ export class CreateUpdatePostComponent implements OnInit{
 
   onSubmitCreateNewsFeedPost(){
     this.loadingService.showLoader();
+    this.error = null;
+
     const formData = new FormData();
     formData.append('title', this.title);
     formData.append('image', this.fileImage);
@@ -46,7 +50,7 @@ export class CreateUpdatePostComponent implements OnInit{
         });
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
         this.loadingService.hideLoader();
       }
     })
@@ -92,6 +96,9 @@ export class CreateUpdatePostComponent implements OnInit{
   }
 
   onUpdatePost(){
+    this.loadingService.showLoader();
+    this.error = null;
+
     const updatedFormData = new FormData();
     updatedFormData.append('title', this.title);
     updatedFormData.append('content', this.editorContent);
@@ -100,12 +107,14 @@ export class CreateUpdatePostComponent implements OnInit{
 
     this.newsfeedService.updateNewsFeedPostById(this.postToUpdate._id, updatedFormData).subscribe({
       next: (res) => {
+        this.loadingService.hideLoader();
         this.router.navigate(["./newsDetail"], {
           queryParams: {id: this.postToUpdate._id},
         });
       },
       error: (err) => {
-        console.log(err);
+        this.error = err;
+        this.loadingService.hideLoader();
       }
     })
 

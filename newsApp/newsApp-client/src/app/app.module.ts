@@ -18,6 +18,7 @@ import { NewsFeedPostComponent } from './components/main/news-feed/news-feed-pos
 import { NewsPaginatorComponent } from './components/main/news-feed/news-paginator/news-paginator.component';
 import { UserDetailsComponent } from './components/main/user/user-details/user-details.component';
 import { LoadingComponent } from './components/loading/loading.component';
+import { ErrorAlertComponent } from './components/error-alert/error-alert.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { LoadingComponent } from './components/loading/loading.component';
     NewsFeedPostComponent,
     NewsPaginatorComponent,
     UserDetailsComponent,
-    LoadingComponent
+    LoadingComponent,
+    ErrorAlertComponent
   ],
   imports: [
     BrowserModule,
