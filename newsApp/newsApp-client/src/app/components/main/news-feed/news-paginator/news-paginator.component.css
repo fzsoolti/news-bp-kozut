@@ -1,0 +1,25 @@
+.paginator{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.limitSelect{
+  background-color: var(--admin-primary-card-background-color);
+  color: var(--admin-primary-text-color);
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-left: 0.5rem;
+}
+
+.limitSelect option {
+  color: black;
+}
+
+mat-icon:hover{
+  color: var(--admin-primary-card-background-color);
+}
+
+mat-icon{
+  cursor: pointer;
+}

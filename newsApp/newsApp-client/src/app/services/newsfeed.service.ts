@@ -1,7 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { EventEmitter, Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { GetNewsfeedPostResponse } from '../models/ResponseModels';
+import { GetNewsfeedPostResponse, GetNewsfeedPostsResponse } from '../models/ResponseModels';
 import { DomSanitizer } from '@angular/platform-browser';
 
 @Injectable({
@@ -15,6 +15,10 @@ export class NewsfeedService {
   //------- GET -------
   getNewsFeedPostById(id: string){
     return this.http.get<GetNewsfeedPostResponse>(`${this.URI}/`+id);
+  }
+
+  getNewsFeedPosts(params: HttpParams){
+    return this.http.get<GetNewsfeedPostsResponse>(`${this.URI}`, { params });
   }
 
   //------- POST -------

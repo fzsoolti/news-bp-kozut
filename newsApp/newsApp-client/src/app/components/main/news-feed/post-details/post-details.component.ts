@@ -7,11 +7,11 @@ import { UserService } from 'src/app/services/user.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-post-detials',
-  templateUrl: './post-detials.component.html',
-  styleUrls: ['./post-detials.component.css']
+  selector: 'app-post-details',
+  templateUrl: './post-details.component.html',
+  styleUrls: ['./post-details.component.css']
 })
-export class PostDetialsComponent implements OnInit{
+export class PostDetailsComponent implements OnInit{
   newsFeedPost!: NewsFeedPost;
   imagePrefix = environment.host+"/images";
   currentUser!: User;
