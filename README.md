@@ -19,6 +19,6 @@
 2. go to news-bp-kozut\newsApp\newsApp-client folder
 3. terminal:
 ```
-//              - npm i
-//              - ng serve
+              - npm i
+              - ng serve
 ```
