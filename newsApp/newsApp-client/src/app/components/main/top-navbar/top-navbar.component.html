@@ -5,9 +5,8 @@
     Google bejelentkezés
   </button>
   <img *ngIf="user" class="ms-1 me-1 mb-0" [src]="user.pictureURL" alt="pictureURL" height="35px" style="border-radius: 50%">
-  <p *ngIf="user" class="m-0" style="font-size: small; cursor: pointer">{{user.username}}</p>
+  <p *ngIf="user" class="m-0" style="font-size: small; cursor: pointer" routerLink="./user">{{user.username}}</p>
   <button *ngIf="user" mat-icon-button (click)="onLogout()">
     <mat-icon>logout</mat-icon>
   </button>
-
 </mat-toolbar>

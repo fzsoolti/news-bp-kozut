@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { GetUserResponse } from '../models/ResponseModels';
+import { GetDetailedUserResponse, GetUserResponse } from '../models/ResponseModels';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -13,5 +13,9 @@ export class UserService {
 
   getMe(){
     return this.http.get<GetUserResponse>(this.URI+"/me");
+  }
+
+  getDetailedMe(){
+    return this.http.get<GetDetailedUserResponse>(this.URI+"/myDetails");
   }
 }
