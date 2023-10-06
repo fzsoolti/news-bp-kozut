@@ -9,4 +9,6 @@ router.use(authController.protect);
 
 router.get('/me', userController.getMe, userController.getUserById);
 
+router.get('/myDetails', userController.getMe, userController.getDetailedUserById);
+
 module.exports = router;

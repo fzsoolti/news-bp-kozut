@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PostDetailsComponent } from './components/main/news-feed/post-details/post-details.component';
 import { NewsFeedPostComponent } from './components/main/news-feed/news-feed-post/news-feed-post.component';
 import { NewsPaginatorComponent } from './components/main/news-feed/news-paginator/news-paginator.component';
+import { UserDetailsComponent } from './components/main/user/user-details/user-details.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { NewsPaginatorComponent } from './components/main/news-feed/news-paginat
     CreateUpdatePostComponent,
     PostDetailsComponent,
     NewsFeedPostComponent,
-    NewsPaginatorComponent
+    NewsPaginatorComponent,
+    UserDetailsComponent
   ],
   imports: [
     BrowserModule,

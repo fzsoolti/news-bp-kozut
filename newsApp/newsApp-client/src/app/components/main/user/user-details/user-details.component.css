@@ -1,0 +1,20 @@
+.userDetails{
+  background-color: rgb(241, 241, 241);
+  text-align: center;
+}
+
+.postIMG{
+  object-fit: cover;
+  object-position:center;
+  height: 150px;
+}
+
+.post{
+  background-color: rgb(219, 219, 219);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.post:hover{
+  background-color: rgb(138, 138, 138);
+}

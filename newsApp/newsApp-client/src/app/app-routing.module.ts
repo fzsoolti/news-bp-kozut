@@ -6,6 +6,7 @@ import { MainComponent } from './components/main/main.component';
 import { CreateUpdatePostComponent } from './components/main/news-feed/create-update-post/create-update-post.component';
 import { UserAuthGuard } from './components/auth/userAuth.guard';
 import { PostDetailsComponent } from './components/main/news-feed/post-details/post-details.component';
+import { UserDetailsComponent } from './components/main/user/user-details/user-details.component';
 
 const routes: Routes = [
   { path: 'auth', component: AuthComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
     { path: 'add', component: CreateUpdatePostComponent, canActivate:[UserAuthGuard] },
     { path: 'update', component: CreateUpdatePostComponent, canActivate:[UserAuthGuard] },
     { path: 'newsDetail', component: PostDetailsComponent},
+    { path: 'user', component: UserDetailsComponent},
   ],
   },
 ];

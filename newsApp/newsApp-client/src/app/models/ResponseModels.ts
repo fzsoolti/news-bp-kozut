@@ -8,6 +8,14 @@ export interface GetUserResponse {
   status:string;
 }
 
+export interface GetDetailedUserResponse {
+  data:{
+      user:User;
+      newsFeedPosts:NewsFeedPost[];
+  };
+  status:string;
+}
+
 export interface GetNewsfeedPostResponse {
   status: string;
   data: {

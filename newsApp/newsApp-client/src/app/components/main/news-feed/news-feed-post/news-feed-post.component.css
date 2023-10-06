@@ -2,7 +2,7 @@
   background-color: rgb(241, 241, 241);
 }
 
-.eventIMG{
+.postIMG{
   object-fit: cover;
   object-position:center;
   width: 100%;

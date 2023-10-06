@@ -1,0 +1,23 @@
+<a routerLink="../" class="ms-3">Vissza</a>
+
+<div class="container userDetails">
+  <div *ngIf="!user">
+    <h1>Nem található ilyen felhasználó! 😢</h1>
+  </div>
+
+  <div *ngIf="user">
+    <img [src]="user.pictureURL" [alt]="'User fotó'" class="img-fluid postIMG">
+    <h2 class="m-0">{{user.username}}</h2>
+    <small>{{user.email}}</small>
+    <p style="color: gray;">Létrehozva: {{user.createdAt | date:'YYYY.MM.dd, HH:mm'}}</p>
+    <hr>
+    <h3>Saját posztok</h3>
+    <div *ngIf="!myPosts || (myPosts && myPosts.length == 0)">Nincsenek saját posztok.</div>
+    <div *ngIf="myPosts" class="myPosts">
+      <div routerLink="../newsDetail" [queryParams]="{id:post._id}" class="post h-75 m-1 p-2" *ngFor="let post of myPosts">
+        {{post.title}}
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
