@@ -4,6 +4,7 @@ import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
 import { AuthService } from '../../auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
+import { LoadingService } from '../../loading/loading.service';
 
 @Component({
   selector: 'app-news-feed',
@@ -14,7 +15,7 @@ export class NewsFeedComponent implements OnInit{
   newsFeedPosts!: NewsFeedPost[];
   numOfAllPosts!: number;
 
-  constructor(private newsFeedService: NewsfeedService, private authService: AuthService, private route: ActivatedRoute) {}
+  constructor(private newsFeedService: NewsfeedService, private authService: AuthService, private route: ActivatedRoute, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     const limit = 20;
@@ -30,6 +31,7 @@ export class NewsFeedComponent implements OnInit{
   }
 
   private getNewsfeedPosts(limit: number, page: number) {
+    this.loadingService.showLoader();
 
     const params = new HttpParams()
       .set('limit', limit.toString())
@@ -39,9 +41,11 @@ export class NewsFeedComponent implements OnInit{
       next: (response) => {
         this.newsFeedPosts = response.data.posts;
         this.numOfAllPosts = response.numOfResults;
+        this.loadingService.hideLoader();
       },
       error: (error) => {
         console.log(error);
+        this.loadingService.hideLoader();
       },
     });
   }

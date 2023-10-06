@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { LoadingService } from 'src/app/components/loading/loading.service';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { NewsfeedService } from 'src/app/services/newsfeed.service';
 import { environment } from 'src/environments/environment';
@@ -20,7 +21,7 @@ export class CreateUpdatePostComponent implements OnInit{
   currentImage!: string;
   selectedImage!: string | ArrayBuffer | null;
 
-  constructor(private newsfeedService: NewsfeedService, private router: Router, private route: ActivatedRoute) {}
+  constructor(private newsfeedService: NewsfeedService, private router: Router, private route: ActivatedRoute, private loadingService: LoadingService) {}
 
   ngOnInit(): void {
     this.route.url.subscribe(segments => {
@@ -31,6 +32,7 @@ export class CreateUpdatePostComponent implements OnInit{
   }
 
   onSubmitCreateNewsFeedPost(){
+    this.loadingService.showLoader();
     const formData = new FormData();
     formData.append('title', this.title);
     formData.append('image', this.fileImage);
@@ -38,12 +40,14 @@ export class CreateUpdatePostComponent implements OnInit{
 
     this.newsfeedService.createNewsFeedPost(formData).subscribe({
       next: (res) => {
+        this.loadingService.hideLoader();
         this.router.navigate(["/newsDetail"], {
           queryParams: {id: res.data.post._id},
         });
       },
       error: (err) => {
         console.log(err);
+        this.loadingService.hideLoader();
       }
     })
   }

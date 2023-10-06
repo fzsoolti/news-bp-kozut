@@ -17,6 +17,7 @@ import { PostDetailsComponent } from './components/main/news-feed/post-details/p
 import { NewsFeedPostComponent } from './components/main/news-feed/news-feed-post/news-feed-post.component';
 import { NewsPaginatorComponent } from './components/main/news-feed/news-paginator/news-paginator.component';
 import { UserDetailsComponent } from './components/main/user/user-details/user-details.component';
+import { LoadingComponent } from './components/loading/loading.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { UserDetailsComponent } from './components/main/user/user-details/user-d
     PostDetailsComponent,
     NewsFeedPostComponent,
     NewsPaginatorComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    LoadingComponent
   ],
   imports: [
     BrowserModule,
