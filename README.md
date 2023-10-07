@@ -22,3 +22,6 @@
               - npm i
               - ng serve
 ```
+
+### API DOCS
+http://localhost:3000/api-docs/
