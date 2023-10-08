@@ -42,7 +42,6 @@ const router = express.Router();
  *         - createdBy
  */
 
-
 /**
  * @swagger
  * /api/v1/news:

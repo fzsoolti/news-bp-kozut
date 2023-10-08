@@ -1,6 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
+import { AuthService } from 'src/app/components/auth/auth.service';
 import { LoadingService } from 'src/app/components/loading/loading.service';
 import { NewsFeedPost } from 'src/app/models/NewsFeedPost';
 import { User } from 'src/app/models/User';
@@ -19,7 +20,7 @@ export class PostDetailsComponent implements OnInit{
   imagePrefix = environment.host+"/images";
   currentUser!: User;
 
-  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService, private router: Router, private loadingService: LoadingService) {}
+  constructor(private route: ActivatedRoute, private newsFeedService: NewsfeedService, private userService: UserService, private router: Router, private loadingService: LoadingService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params: Params) => {
@@ -44,18 +45,21 @@ export class PostDetailsComponent implements OnInit{
     })
   }
 
-  getMe(){
+  private getMe(){
     this.error = null;
 
-    this.userService.getMe().subscribe({
-      next: (res) => {
-        this.currentUser = res.data.user;
-      },
-      error: (err) => {
-        this.error = err;
-      }
-    })
+    if (this.authService.user.value) {
+      this.userService.getMe().subscribe({
+        next: (res) => {
+          this.currentUser = res.data.user;
+        },
+        error: (err) => {
+          this.error = err;
+        }
+      });
+    }
   }
+
 
   navigateToUpdate(){
     this.router.navigate(["/update"], {

@@ -51,9 +51,9 @@ app.use('/images', express.static('./uploads/img'));
 
 app.use(compression());
 
+//API ROUTES
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
-//API ROUTES
 const apiPrefix = "/api/v1";
 
 app.use(`/auth`, authRouter);
