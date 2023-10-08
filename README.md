@@ -13,6 +13,9 @@
 (dev debug)       - npm run debug 
 (prod debug)      - npm run debug:prod 
 ```
+### API DOCS
+http://localhost:3000/api-docs/
+
 
 ### To start the client:
 1. install nodejs (min 18.0.0) https://nodejs.org/en/download/current

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 
+
 const newsFeedPostSchema = new mongoose.Schema(
   {
     title: {
