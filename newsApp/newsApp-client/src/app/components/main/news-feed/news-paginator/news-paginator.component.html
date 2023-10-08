@@ -1,4 +1,4 @@
-<div class="paginator mb-3">
+<div *ngIf="numOfAllPosts > 0" class="paginator mb-3">
   <div style="display: flex; align-items: center; ">
     <mat-icon (click)="currentPage > 1 ? onChangePages(currentPage-1,currentLimit) : null">navigate_before</mat-icon>
     <span>{{currentPage}}</span>

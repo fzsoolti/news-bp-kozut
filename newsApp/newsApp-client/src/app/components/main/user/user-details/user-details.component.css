@@ -1,5 +1,5 @@
 .userDetails{
-  background-color: rgb(241, 241, 241);
+  background-color: var(--post-background-color);
   text-align: center;
 }
 
@@ -10,7 +10,7 @@
 }
 
 .post{
-  background-color: rgb(219, 219, 219);
+  background-color: var(--post-title);
   border-radius: 5px;
   cursor: pointer;
 }

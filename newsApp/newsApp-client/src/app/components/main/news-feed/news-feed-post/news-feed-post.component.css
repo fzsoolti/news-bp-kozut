@@ -1,5 +1,5 @@
 .newsFeedPost{
-  background-color: rgb(241, 241, 241);
+  background-color: var(--post-background-color);
 }
 
 .postIMG{
@@ -15,5 +15,5 @@
 }
 
 .postTitle{
-  background-color: rgb(202, 202, 202);
+  background-color: var(--post-title);
 }
