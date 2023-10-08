@@ -10,7 +10,7 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  background-color: white;
+  background-color: var(--main-background-color);
 }
 
 /* MOTORSPORTVID ANIMATION */
@@ -19,6 +19,7 @@
   font-size: 30px;
   animation: wave-slide 3s ease-in-out infinite;
   display: inline-block;
+  color: var(--main-color);
 }
 
 @keyframes wave-slide {
