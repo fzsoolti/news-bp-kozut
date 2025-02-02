@@ -1,4 +1,4 @@
-# news-bp-kozut
+# news-bp-kozut  (Job Application Assignment)
 
 ### To start the server:
 1. install nodejs (min 18.0.0) https://nodejs.org/en/download/current
